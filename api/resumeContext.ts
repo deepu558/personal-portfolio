@@ -13,7 +13,6 @@ LinkedIn: linkedin.com/in/manideep-grandhe`,
   {
     title: "Professional summary",
     body: `Senior software engineer with 11+ years in Healthcare IT.
-Leads with UI clarity and systems thinking; ships full-stack healthcare products.
 Strong in React, TypeScript, Oracle JET (OJET), Java, Ruby on Rails.
 Focus: scheduling and revenue-cycle UIs, modular components, OpenAPI integrations, WCAG/accessibility, design patterns, agile delivery across the SDLC.
 Testing: JUnit, RSpec, Playwright, Selenium.`,
