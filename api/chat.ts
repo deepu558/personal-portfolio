@@ -14,7 +14,7 @@ type ChatMessage = { role: "user" | "assistant"; content: string };
 const SYNONYM_GROUPS = [
   ["email", "mail", "gmail", "contact", "reach", "message"],
   ["phone", "call", "number", "mobile", "telephone", "703"],
-  ["location", "address", "where", "live", "based", "northlake", "texas", "tx"],
+  ["location", "address", "live", "based", "northlake", "texas", "tx"],
   ["linkedin", "profile", "social"],
   ["skill", "skills", "stack", "tech", "technologies", "tools", "languages"],
   ["education", "degree", "university", "college", "gpa", "masters", "ms", "btech", "jntu", "missouri"],
@@ -57,6 +57,46 @@ function scoreChunk(query: Set<string>, title: string, body: string): number {
 function lastUserQuery(messages: ChatMessage[]): string {
   const users = messages.filter((m) => m.role === "user").slice(-3);
   return users.map((m) => m.content).join(" ");
+}
+
+/** “Where does he work now?” should hit Oracle (current), not Contact — $0 matcher has no LLM. */
+function wantsCurrentJob(raw: string): boolean {
+  const q = raw.toLowerCase();
+  if (
+    /\b(current|now|present|today|currently)\b/.test(q) &&
+    /\b(work|working|works|job|jobs|employ|employed|employer|company|role)\b/.test(q)
+  ) {
+    return true;
+  }
+  if (/\bwhere\b/.test(q) && /\b(work|working|works|job|employed|employer)\b/.test(q)) {
+    return true;
+  }
+  if (
+    /\b(work|working|job)\b/.test(q) &&
+    /\b(now|today|currently|these days)\b/.test(q)
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function wantsContactInfo(raw: string): boolean {
+  const q = raw.toLowerCase();
+  if (/\b(email|phone|call|linkedin|reach out|contact|gmail)\b/.test(q)) {
+    return true;
+  }
+  if (/\bwhere\b/.test(q) && /\b(live|living|located|location|address|based|from)\b/.test(q)) {
+    return true;
+  }
+  return false;
+}
+
+function chunkIndexCurrentRole(): number {
+  return PROFILE_CHUNKS.findIndex((c) => /\b\(current\)\b/i.test(c.title));
+}
+
+function chunkIndexContact(): number {
+  return PROFILE_CHUNKS.findIndex((c) => c.title === "Contact");
 }
 
 const OFF_TOPIC =
@@ -117,6 +157,27 @@ export default async function handler(req: Request): Promise<Response> {
 
   if (query.size === 0) {
     return new Response(JSON.stringify({ reply: HELP }), {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  const currentIdx = chunkIndexCurrentRole();
+  const contactIdx = chunkIndexContact();
+
+  if (wantsCurrentJob(queryText) && !wantsContactInfo(queryText) && currentIdx >= 0) {
+    const c = PROFILE_CHUNKS[currentIdx]!;
+    const reply = `${c.title}\n\n${c.body.trim()}`;
+    return new Response(JSON.stringify({ reply }), {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  if (wantsContactInfo(queryText) && !wantsCurrentJob(queryText) && contactIdx >= 0) {
+    const c = PROFILE_CHUNKS[contactIdx]!;
+    const reply = `${c.title}\n\n${c.body.trim()}`;
+    return new Response(JSON.stringify({ reply }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
