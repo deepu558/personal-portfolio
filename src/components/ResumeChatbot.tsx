@@ -27,6 +27,7 @@ const ResumeChatbot = () => {
   const [messages, setMessages] = useState<Msg[]>([WELCOME]);
   const [pending, setPending] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -35,6 +36,13 @@ const ResumeChatbot = () => {
       behavior: "smooth",
     });
   }, [messages, open, pending]);
+
+  useEffect(() => {
+    if (open) {
+      const t = window.setTimeout(() => inputRef.current?.focus(), 0);
+      return () => window.clearTimeout(t);
+    }
+  }, [open]);
 
   const send = useCallback(async () => {
     const text = input.trim();
@@ -55,6 +63,7 @@ const ResumeChatbot = () => {
     setMessages((m) => [...m, userMsg]);
     setPending(true);
 
+    let assistantReply: string;
     try {
       const res = await fetch(chatEndpoint(), {
         method: "POST",
@@ -63,29 +72,42 @@ const ResumeChatbot = () => {
       });
       const data = (await res.json()) as { reply?: string; error?: string };
 
-      if (!res.ok) {
-        throw new Error(data.error ?? `Request failed (${res.status})`);
-      }
-      if (!data.reply) {
-        throw new Error("No reply from assistant");
+      if (res.status === 503) {
+        assistantReply =
+          "The chat service isn’t set up yet: add OPENAI_API_KEY in your Vercel project (Settings → Environment Variables), redeploy, then try again.";
+      } else if (!res.ok) {
+        assistantReply =
+          data.error ??
+          "The assistant had a server error. Try again in a moment.";
+      } else if (!data.reply) {
+        assistantReply =
+          "The assistant returned an empty reply. Please try again.";
+      } else {
+        assistantReply = data.reply;
       }
 
-      setMessages((m) => [
-        ...m,
-        { id: `a-${Date.now()}`, role: "assistant", content: data.reply! },
-      ]);
-    } catch {
       setMessages((m) => [
         ...m,
         {
           id: `a-${Date.now()}`,
           role: "assistant",
-          content:
-            "Sorry — I couldn’t reach the assistant. On production, ensure OPENAI_API_KEY is set on Vercel. For local testing, run `npx vercel dev` from the project root with that env var.",
+          content: assistantReply,
         },
+      ]);
+    } catch (e) {
+      const offline =
+        e instanceof TypeError ||
+        (e instanceof Error && /fetch|network|load failed/i.test(e.message));
+      assistantReply = offline
+        ? "I can’t reach the chat API. `npm run dev` only runs the site — use `npx vercel dev` locally (with OPENAI_API_KEY in `.env`), or test on your live Vercel deployment."
+        : "Something went wrong. Check your connection and try again.";
+      setMessages((m) => [
+        ...m,
+        { id: `a-${Date.now()}`, role: "assistant", content: assistantReply },
       ]);
     } finally {
       setPending(false);
+      requestAnimationFrame(() => inputRef.current?.focus());
     }
   }, [input, messages, pending]);
 
@@ -141,17 +163,18 @@ const ResumeChatbot = () => {
             className="resume-chatbot-form"
             onSubmit={(e) => {
               e.preventDefault();
+              if (pending) return;
               void send();
             }}
           >
             <input
+              ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="e.g. Where does he work now?"
               autoComplete="off"
               maxLength={500}
-              disabled={pending}
               aria-label="Your question"
             />
             <button
