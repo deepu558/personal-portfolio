@@ -14,13 +14,35 @@
   padding-bottom: 0;
   width: 500px;
   max-width: calc(100% - 15px);
+  border-radius: var(--radiusUi, 16px);
+  border: 1px solid var(--surfaceBorder, rgba(94, 234, 212, 0.12));
+  background: var(--surface, rgba(15, 23, 42, 0.4));
+  backdrop-filter: blur(12px);
+  box-sizing: border-box;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
+
+.about-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accentMuted, rgba(94, 234, 212, 0.65));
+}
+
 .about-me h3 {
   font-size: 25px;
   text-transform: uppercase;
   letter-spacing: 7px;
   font-weight: 400;
   color: var(--accentColor);
+}
+
+.about-me .para strong {
+  font-weight: 600;
+  color: #f1f5f9;
 }
 
 .about-me p {
@@ -55,8 +77,9 @@
     opacity: 1;
   }
   .about-me {
-    padding: 0px;
+    padding: 2rem 2.25rem;
     width: 50%;
+    max-width: 640px;
   }
   .about-me p {
     font-size: 1.9vw;

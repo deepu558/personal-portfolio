@@ -7,12 +7,14 @@ const TechStack = () => {
       className="techstack section-container"
       aria-labelledby="techstack-heading"
     >
+      <p className="techstack-eyebrow">Design &amp; delivery</p>
       <h2 id="techstack-heading" className="techstack-heading">
-        My tech stack
+        Tools I design with
       </h2>
       <p className="techstack-lead">
-        Tools and technologies I use most often — grouped so you can scan them
-        quickly.
+        Stack for building polished interfaces, resilient services, and
+        accessible healthcare experiences — organized by how I use them day to
+        day.
       </p>
 
       <div className="techstack-groups">
