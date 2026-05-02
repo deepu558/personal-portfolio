@@ -18,7 +18,7 @@ const WELCOME: Msg = {
   id: "welcome",
   role: "assistant",
   content:
-    "Hi — I’m Manideep’s resume assistant. Ask about experience, skills, education, or how to reach him.",
+    "Hi — I’m Manideep’s assistant. Ask about experience, skills, education, or how to reach him.",
 };
 
 const ResumeChatbot = () => {
@@ -107,10 +107,10 @@ const ResumeChatbot = () => {
           className="resume-chatbot-panel"
           id="resume-chatbot-panel"
           role="dialog"
-          aria-label="Resume assistant chat"
+          aria-label="Ask Manideep chat"
         >
           <header className="resume-chatbot-header">
-            <span>Ask Manideep’s resume</span>
+            <span>Ask Manideep</span>
             <button
               type="button"
               className="resume-chatbot-close"

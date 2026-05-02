@@ -1,8 +1,8 @@
 /**
- * Knowledge base for the portfolio chatbot — keep aligned with your site / resume.
+ * Knowledge base for the portfolio chatbot — keep aligned with your site and CV.
  */
 export const RESUME_KNOWLEDGE = `
-# Manideep Grandhe — profile (resume-aligned)
+# Manideep Grandhe — profile
 
 ## Contact
 - Email: manideepgrandhe@gmail.com
