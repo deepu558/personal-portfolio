@@ -1,88 +1,176 @@
-# Fawaz V - Personal Portfolio
+# 3D Portfolio Website
 
-A premium, interactive personal portfolio website built with modern web technologies to showcase my projects, technical skills, and professional journey.
+This repository contains the source code for a personal 3D portfolio built with React, TypeScript, Three.js, React Three Fiber, and GSAP. It includes animated page sections, a character scene, custom cursor interactions, and smooth transitions designed for a modern portfolio experience.
 
-## 🚀 Features
+Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.app/)
 
-- **Immersive Design:** Dark-themed, high-contrast aesthetic with ambient lighting and glassmorphism effects.
-- **Scrolly-telling Experience:** Smooth scroll animations and transition effects guided by user interaction.
-- **Interactive Projects Grid:** Bento-style grid layout with video previews and detailed modal views for each project.
-- **Dynamic Timeline:** Visual representation of my professional career and educational background.
-- **Testimonial Marquee:** Infinite scrolling marquee for client and colleague testimonials.
-- **Responsive Layout:** Fully optimized for desktops, tablets, and mobile devices.
-- **Contact Integration:** Functional contact form integrated with Nodemailer for direct email communication.
+![Portfolio Preview](public/images/preview1.png)
 
-## 🛠️ Tech Stack
+## Table of Contents
 
-- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
-- **Language:** TypeScript
-- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **3D Elements:** [Three.js](https://threejs.org/) & [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
-- **Icons:** Custom SVG & Lucide React
-- **Video:** [FFmpeg](https://ffmpeg.org/) (for optimization) & HTML5 Video
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [GSAP License Note](#gsap-license-note)
+- [Customization Guide](#customization-guide)
+- [Troubleshooting](#troubleshooting)
+- [Deployment](#deployment)
+- [License](#license)
 
-## 📂 Project Structure
+## Features
 
-```
+- Responsive one-page portfolio layout with reusable section components.
+- 3D character scene rendering powered by React Three Fiber and Three.js.
+- GSAP-powered animations and transitions for interactive storytelling.
+- Custom cursor, hover interactions, and scroll-driven visual effects.
+- Organized component architecture with dedicated utilities and style modules.
+
+## Tech Stack
+
+### Core
+
+- React 18
+- TypeScript
+- Vite
+
+### Animation and 3D
+
+- GSAP + `@gsap/react`
+- Three.js
+- `@react-three/fiber`
+- `@react-three/drei`
+- `@react-three/postprocessing`
+- `@react-three/cannon`
+- `@react-three/rapier`
+
+### Supporting Libraries
+
+- `react-icons`
+- `react-fast-marquee`
+- `@vercel/analytics`
+
+## Project Structure
+
+```text
+.
+├── public/                    # Static assets
 ├── src/
-│   ├── app/             # Application routes (Next.js App Router)
-│   ├── components/      # Reusable UI components (Hero, Projects, Skills, etc.)
-│   ├── hooks/           # Custom React hooks
-│   ├── lib/             # Utility functions and shared logic
-│   └── styles/          # Global styles and Tailwind configuration
-├── public/              # Static assets (images, videos, fonts)
-├── .env.local           # Environment variables (not committed)
-└── package.json         # Project dependencies and scripts
+│   ├── assets/                # Local media/assets
+│   ├── components/
+│   │   ├── Character/         # 3D scene + character logic/utilities
+│   │   ├── styles/            # Section/component CSS files
+│   │   ├── About.tsx
+│   │   ├── Career.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Landing.tsx
+│   │   ├── MainContainer.tsx  # Main page composition
+│   │   ├── Navbar.tsx
+│   │   ├── TechStack.tsx
+│   │   ├── WhatIDo.tsx
+│   │   └── Work.tsx
+│   ├── context/               # Global providers (loading state, etc.)
+│   ├── data/                  # Static data/content definitions
+│   ├── App.tsx
+│   └── main.tsx
+├── package.json
+└── vite.config.ts
 ```
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm, yarn, or pnpm
+- Node.js 18+ (recommended)
+- npm 9+ (or compatible)
 
 ### Installation
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/fawazv/personal_porfolio.git
-   cd personal_porfolio
+   git clone <your-repository-url>
+   cd 3d-portfolio
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. Set up environment variables:
-   Create a `.env.local` file in the root directory and add the necessary variables for email services (if applicable):
-   ```env
-   EMAIL_USER=your_email@example.com
-   EMAIL_PASS=your_app_password
-   ```
+3. Start the local development server:
 
-4. Run the development server:
    ```bash
    npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
+4. Open the URL shown in the terminal (typically `http://localhost:5173`).
 
-## 📜 Scripts
+## Available Scripts
 
-- `npm run dev`: Starts the development server.
-- `npm run build`: Builds the application for production.
-- `npm start`: Runs the built production application.
-- `npm run lint`: Runs ESLint for code quality checks.
+- `npm run dev`  
+  Starts Vite dev server and exposes host for local network testing.
 
-## 🤝 Contributing
+- `npm run build`  
+  Type-checks and builds a production-ready bundle.
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/fawazv/personal_porfolio/issues).
+- `npm run preview`  
+  Serves the production build locally for verification.
 
-## 📄 License
+- `npm run lint`  
+  Runs ESLint checks across the project.
 
-This project is open-source and available under the [MIT License](LICENSE).
+## GSAP License Note
+
+This project uses the standard `gsap` package, including bonus plugins now available in the core package.
+
+- Install dependencies with `npm install`.
+- If migrating from older setups, remove `gsap-trial` from your project.
+
+Read official installation guidance here: [GSAP Installation Docs](https://gsap.com/docs/v3/Installation/)
+
+## Customization Guide
+
+You can adapt this portfolio to your own profile by updating the following areas:
+
+- **Content sections**: Edit files in `src/components/` such as `About.tsx`, `Career.tsx`, `WhatIDo.tsx`, and `Work.tsx`.
+- **Data source**: Update static values in files under `src/data/`.
+- **Styling**: Modify component styles in `src/components/styles/` and global styles in `src/index.css` / `src/App.css`.
+- **3D scene behavior**: Adjust scene logic in `src/components/Character/` and related utilities.
+- **Animations**: Tweak GSAP utilities under `src/components/utils/`.
+
+## Troubleshooting
+
+- **Blank screen in development**  
+  Check browser console for module import errors and verify all dependencies are installed.
+
+- **3D performance issues on low-end devices**  
+  Reduce scene complexity and post-processing effects in the character/scene utilities.
+
+- **GSAP plugin errors**  
+  Ensure you have the correct plugin package and license configuration for your target environment.
+
+- **TypeScript build failures**  
+  Run `npm run build` and address reported type errors before deploying.
+
+## Deployment
+
+1. Create a production build:
+
+   ```bash
+   npm run build
+   ```
+
+2. Validate locally:
+
+   ```bash
+   npm run preview
+   ```
+
+3. Deploy the generated `dist/` folder to your hosting provider (for example Vercel, Netlify, or Cloudflare Pages).
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).

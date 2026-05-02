@@ -1,0 +1,123 @@
+.techstack {
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth, 1920px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0 100px;
+  position: relative;
+}
+
+.techstack-heading {
+  font-size: clamp(2rem, 6vw, 5rem);
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0 0 0.35em;
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, #14b8a6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.techstack-lead {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 3rem;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(234, 229, 236, 0.75);
+  letter-spacing: 0.03em;
+}
+
+.techstack-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+}
+
+.techstack-group-title {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accentColor, #5eead4);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(94, 234, 212, 0.2);
+}
+
+.techstack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .techstack-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem 1.5rem;
+  }
+}
+
+.techstack-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 1.35rem 1rem 1.2rem;
+  border-radius: 14px;
+  background: rgba(10, 14, 23, 0.65);
+  border: 1px solid rgba(94, 234, 212, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.techstack-card:hover {
+  border-color: rgba(94, 234, 212, 0.45);
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(20, 184, 166, 0.15);
+}
+
+.techstack-icon {
+  font-size: 2.35rem;
+  color: #e2e8f0;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 8px rgba(20, 184, 166, 0.25));
+}
+
+.techstack-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: #f1f5f9;
+  margin: 0;
+  line-height: 1.25;
+}
+
+@media screen and (max-width: 600px) {
+  .techstack {
+    padding-bottom: 72px;
+  }
+
+  .techstack-lead {
+    font-size: 0.95rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .techstack-groups {
+    gap: 2.25rem;
+  }
+}
