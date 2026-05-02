@@ -4,6 +4,7 @@
   margin: auto;
   position: relative;
   height: var(--vh);
+  box-sizing: border-box;
 }
 
 .landing-container {
@@ -300,6 +301,23 @@ h2.landing-info-h2 {
       rgba(0, 0, 0, 0) 110%);
   top: 0;
   left: 0;
+}
+
+/* Clear fixed header: on narrow screens nav links stack and the bar is tall */
+@media screen and (max-width: 1024px) {
+  .landing-section {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 5.5rem);
+  }
+
+  .landing-intro {
+    top: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 499px) {
+  .landing-section {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 7.25rem);
+  }
 }
 
 @media screen and (min-width: 500px) {
