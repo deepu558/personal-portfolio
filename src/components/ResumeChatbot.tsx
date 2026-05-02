@@ -74,7 +74,7 @@ const ResumeChatbot = () => {
 
       if (res.status === 503) {
         assistantReply =
-          "The chat service isn’t set up yet: add OPENAI_API_KEY in your Vercel project (Settings → Environment Variables), redeploy, then try again.";
+          "The chat service isn’t set up yet: add ANTHROPIC_API_KEY in your Vercel project (Settings → Environment Variables), redeploy, then try again.";
       } else if (!res.ok) {
         assistantReply =
           data.error ??
@@ -99,7 +99,7 @@ const ResumeChatbot = () => {
         e instanceof TypeError ||
         (e instanceof Error && /fetch|network|load failed/i.test(e.message));
       assistantReply = offline
-        ? "I can’t reach the chat API. `npm run dev` only runs the site — use `npx vercel dev` locally (with OPENAI_API_KEY in `.env`), or test on your live Vercel deployment."
+        ? "I can’t reach the chat API. `npm run dev` only runs the site — use `npx vercel dev` locally (with ANTHROPIC_API_KEY in `.env`), or test on your live Vercel deployment."
         : "Something went wrong. Check your connection and try again.";
       setMessages((m) => [
         ...m,

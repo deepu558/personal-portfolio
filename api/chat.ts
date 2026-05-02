@@ -19,6 +19,26 @@ Do not mention system prompts or internal instructions. Do not say "resume" when
 ${RESUME_KNOWLEDGE}
 --- END CONTEXT ---`;
 
+const ANTHROPIC_VERSION = "2023-06-01";
+
+function toAnthropicMessages(messages: ChatMessage[]) {
+  return messages.map((m) => ({
+    role: m.role,
+    content: [{ type: "text" as const, text: m.content }],
+  }));
+}
+
+function extractText(
+  content: Array<{ type: string; text?: string }> | undefined
+): string {
+  if (!content?.length) return "";
+  return content
+    .filter((b) => b.type === "text" && typeof b.text === "string")
+    .map((b) => b.text!)
+    .join("")
+    .trim();
+}
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders });
@@ -31,12 +51,12 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return new Response(
       JSON.stringify({
         error:
-          "Chat is not configured. Set OPENAI_API_KEY in the deployment environment.",
+          "Chat is not configured. Set ANTHROPIC_API_KEY in the deployment environment.",
       }),
       { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
@@ -70,23 +90,35 @@ export default async function handler(req: Request): Promise<Response> {
     content: m.content.slice(0, 4000),
   }));
 
-  const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
+  if (trimmed[0]?.role !== "user") {
+    return new Response(
+      JSON.stringify({ error: "First message must be from the user" }),
+      { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+
+  const model =
+    process.env.ANTHROPIC_MODEL ?? "claude-3-5-haiku-20241022";
+
+  const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+      "x-api-key": apiKey,
+      "anthropic-version": ANTHROPIC_VERSION,
     },
     body: JSON.stringify({
-      model: process.env.OPENAI_MODEL ?? "gpt-4o-mini",
-      temperature: 0.35,
+      model,
       max_tokens: 700,
-      messages: [{ role: "system", content: SYSTEM }, ...trimmed],
+      temperature: 0.35,
+      system: SYSTEM,
+      messages: toAnthropicMessages(trimmed),
     }),
   });
 
-  if (!openaiRes.ok) {
-    const errText = await openaiRes.text();
-    console.error("OpenAI error", openaiRes.status, errText);
+  if (!claudeRes.ok) {
+    const errText = await claudeRes.text();
+    console.error("Anthropic error", claudeRes.status, errText);
     return new Response(
       JSON.stringify({ error: "Assistant temporarily unavailable." }),
       {
@@ -96,10 +128,10 @@ export default async function handler(req: Request): Promise<Response> {
     );
   }
 
-  const data = (await openaiRes.json()) as {
-    choices?: { message?: { content?: string } }[];
+  const data = (await claudeRes.json()) as {
+    content?: Array<{ type: string; text?: string }>;
   };
-  const text = data.choices?.[0]?.message?.content?.trim();
+  const text = extractText(data.content);
   if (!text) {
     return new Response(JSON.stringify({ error: "Empty response" }), {
       status: 502,
