@@ -193,29 +193,6 @@
   color: transparent;
 }
 
-.landing-badges {
-  list-style: none;
-  margin: 1.35rem 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0.65rem;
-  max-width: 22rem;
-}
-
-.landing-badges li {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--textMuted, rgba(234, 229, 236, 0.8));
-  padding: 0.4rem 0.75rem;
-  border-radius: var(--radiusPill, 999px);
-  border: 1px solid var(--surfaceBorder, rgba(94, 234, 212, 0.2));
-  background: var(--surface, rgba(15, 23, 42, 0.45));
-  backdrop-filter: blur(10px);
-}
-
 .landing-intro h2 {
   margin: 0;
   color: var(--accentColor);
@@ -427,12 +404,6 @@ h2.landing-info-h2 {
     transform: translate(0%, -50%);
     right: auto;
     left: 70%;
-  }
-}
-
-@media screen and (min-width: 1025px) {
-  .landing-badges {
-    max-width: 26rem;
   }
 }
 

@@ -14,11 +14,6 @@ const Landing = ({ children }: PropsWithChildren) => {
               <br />
               <span className="landing-name-accent">GRANDHE</span>
             </h1>
-            <ul className="landing-badges" aria-label="Focus areas">
-              <li>Interfaces &amp; design systems</li>
-              <li>Accessible, WCAG-aware UI</li>
-              <li>Complex workflows made clear</li>
-            </ul>
           </div>
           <div className="landing-info">
             <h3>Senior engineer · interface-led delivery ·</h3>
