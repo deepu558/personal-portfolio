@@ -49,6 +49,38 @@ function extractText(
     .trim();
 }
 
+/** Default: current Haiku alias — see https://platform.claude.com/docs/en/about-claude/models/overview */
+const DEFAULT_MODEL = "claude-haiku-4-5";
+
+function anthropicUserFacingError(status: number, body: string): string {
+  let apiMsg = "";
+  try {
+    const j = JSON.parse(body) as {
+      error?: { message?: string; type?: string };
+    };
+    apiMsg = (j.error?.message ?? "").trim();
+  } catch {
+    /* ignore */
+  }
+
+  if (status === 401) {
+    return "Anthropic rejected the API key (401). Copy the key again from console.anthropic.com → API keys, set ANTHROPIC_API_KEY on Vercel for Preview + Production, then redeploy.";
+  }
+  if (status === 404 || /model|not_found/i.test(apiMsg)) {
+    return `Model not available (${status}). Set env ANTHROPIC_MODEL to a current id (e.g. ${DEFAULT_MODEL}) and redeploy. ${apiMsg ? `Details: ${apiMsg.slice(0, 200)}` : ""}`.trim();
+  }
+  if (
+    status === 400 &&
+    /credit|billing|balance|payment|quota/i.test(apiMsg)
+  ) {
+    return "Anthropic returned a billing or credit error. Add billing / credits in the Anthropic console, then try again.";
+  }
+  if (apiMsg) {
+    return apiMsg.length > 320 ? `${apiMsg.slice(0, 317)}…` : apiMsg;
+  }
+  return "Assistant temporarily unavailable. Check Vercel → Deployment → Functions / Logs for this request.";
+}
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders });
@@ -107,7 +139,7 @@ export default async function handler(req: Request): Promise<Response> {
     );
   }
 
-  const model = env("ANTHROPIC_MODEL") ?? "claude-3-5-haiku-20241022";
+  const model = env("ANTHROPIC_MODEL") ?? DEFAULT_MODEL;
 
   const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -128,13 +160,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (!claudeRes.ok) {
     const errText = await claudeRes.text();
     console.error("Anthropic error", claudeRes.status, errText);
-    return new Response(
-      JSON.stringify({ error: "Assistant temporarily unavailable." }),
-      {
-        status: 502,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
-    );
+    const error = anthropicUserFacingError(claudeRes.status, errText);
+    return new Response(JSON.stringify({ error }), {
+      status: 502,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 
   const data = (await claudeRes.json()) as {
