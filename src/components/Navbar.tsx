@@ -76,6 +76,8 @@ const Navbar = () => {
             </li>
           </ul>
         </nav>
+
+        <div className="navbar-grid-spacer" aria-hidden="true" />
       </header>
 
       <div className="landing-circle1"></div>
