@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { FaLinkedinIn } from "react-icons/fa6";
-import { IoClose, IoMenu } from "react-icons/io5";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
@@ -13,8 +12,6 @@ export let smoother: ScrollSmoother;
 const LINKEDIN_URL = "https://www.linkedin.com/in/manideep-grandhe/";
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -46,81 +43,40 @@ const Navbar = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const closeOnWide = () => {
-      if (window.innerWidth >= 900) setMenuOpen(false);
-    };
-    window.addEventListener("resize", closeOnWide);
-    return () => window.removeEventListener("resize", closeOnWide);
-  }, []);
-
-  const closeMenu = () => setMenuOpen(false);
-
   return (
     <>
-      <div className={`header${menuOpen ? " header--menu-open" : ""}`}>
-        <span className="navbar-title" data-cursor="disable">
-          MG
-        </span>
+      <header className="header">
         <a
           href={LINKEDIN_URL}
-          className="navbar-connect"
-          data-cursor="disable"
+          className="navbar-linkedin"
           target="_blank"
           rel="noopener noreferrer"
+          data-cursor="disable"
         >
-          linkedin.com/in/manideep-grandhe
+          <FaLinkedinIn aria-hidden className="navbar-linkedin-icon" />
+          <span className="navbar-linkedin-text">LinkedIn</span>
         </a>
 
-        <div className="header-actions">
-          <a
-            href={LINKEDIN_URL}
-            className="navbar-linkedin-mobile"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor="disable"
-          >
-            <FaLinkedinIn aria-hidden size={18} />
-            <span>LinkedIn</span>
-          </a>
-          <button
-            type="button"
-            className="navbar-menu-btn"
-            aria-expanded={menuOpen}
-            aria-controls="navbar-mobile-panel"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            data-cursor="disable"
-            onClick={() => setMenuOpen((o) => !o)}
-          >
-            {menuOpen ? <IoClose size={26} /> : <IoMenu size={26} />}
-          </button>
-          <ul id="navbar-mobile-panel" className="navbar-nav-list">
+        <nav className="navbar-nav" aria-label="Page sections">
+          <ul className="navbar-nav-list">
             <li>
-              <a
-                data-href="#about"
-                href="#about"
-                onClick={closeMenu}
-              >
+              <a data-href="#about" href="#about">
                 <HoverLinks text="ABOUT" />
               </a>
             </li>
             <li>
-              <a data-href="#work" href="#work" onClick={closeMenu}>
+              <a data-href="#work" href="#work">
                 <HoverLinks text="WORK" />
               </a>
             </li>
             <li>
-              <a
-                data-href="#contact"
-                href="#contact"
-                onClick={closeMenu}
-              >
+              <a data-href="#contact" href="#contact">
                 <HoverLinks text="CONTACT" />
               </a>
             </li>
           </ul>
-        </div>
-      </div>
+        </nav>
+      </header>
 
       <div className="landing-circle1"></div>
       <div className="landing-circle2"></div>
