@@ -18,7 +18,7 @@ const WELCOME: Msg = {
   id: "welcome",
   role: "assistant",
   content:
-    "Hi — I’m Manideep’s assistant. Ask about experience, skills, education, or how to reach him.",
+    "Hi — I’m Manideep’s assistant (profile-only, no paid AI). Ask about jobs, skills, education, or contact info.",
 };
 
 const ResumeChatbot = () => {
@@ -74,7 +74,7 @@ const ResumeChatbot = () => {
 
       if (res.status === 503) {
         assistantReply =
-          "The chat service isn’t set up yet: add ANTHROPIC_API_KEY in your Vercel project (Settings → Environment Variables), redeploy, then try again.";
+          "The chat service isn’t available on this deployment. Try again on your Vercel preview/production URL.";
       } else if (!res.ok) {
         assistantReply =
           data.error ??
@@ -99,7 +99,7 @@ const ResumeChatbot = () => {
         e instanceof TypeError ||
         (e instanceof Error && /fetch|network|load failed/i.test(e.message));
       assistantReply = offline
-        ? "I can’t reach the chat API. `npm run dev` only runs the site — use `npx vercel dev` locally (with ANTHROPIC_API_KEY in `.env`), or test on your live Vercel deployment."
+        ? "I can’t reach the chat API. Use `npx vercel dev` locally or open your deployed Vercel site — plain `npm run dev` doesn’t serve `/api/chat`."
         : "Something went wrong. Check your connection and try again.";
       setMessages((m) => [
         ...m,
