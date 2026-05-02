@@ -1,4 +1,4 @@
-import { RESUME_KNOWLEDGE } from "./resumeContext";
+import { RESUME_KNOWLEDGE } from "./resumeContext.js";
 
 export const config = { runtime: "edge" };
 
@@ -20,6 +20,16 @@ ${RESUME_KNOWLEDGE}
 --- END CONTEXT ---`;
 
 const ANTHROPIC_VERSION = "2023-06-01";
+
+/** Vercel injects env at runtime; avoid `process` global so app `tsc` doesn’t need @types/node. */
+function env(key: string): string | undefined {
+  const p = (
+    globalThis as unknown as {
+      process?: { env?: Record<string, string | undefined> };
+    }
+  ).process;
+  return p?.env?.[key];
+}
 
 function toAnthropicMessages(messages: ChatMessage[]) {
   return messages.map((m) => ({
@@ -51,7 +61,7 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = env("ANTHROPIC_API_KEY");
   if (!apiKey) {
     return new Response(
       JSON.stringify({
@@ -97,8 +107,7 @@ export default async function handler(req: Request): Promise<Response> {
     );
   }
 
-  const model =
-    process.env.ANTHROPIC_MODEL ?? "claude-3-5-haiku-20241022";
+  const model = env("ANTHROPIC_MODEL") ?? "claude-3-5-haiku-20241022";
 
   const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
