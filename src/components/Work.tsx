@@ -3,30 +3,33 @@ import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
-/** Highlights aligned with resume — swap images in /public/images when you have screenshots. */
+/** Stock imagery (Unsplash) as placeholders — replace with your own screenshots anytime. */
 const projects = [
   {
     title: "Healthcare scheduling & access",
     category: "Oracle · OJET, React, TypeScript",
     tools:
       "Modular scheduling UI, component libraries, OpenAPI integrations, WCAG-focused modernization",
-    image: "/images/work-slide.svg",
-    link: "https://www.oracle.com/health/",
+    image:
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop",
+    link: undefined,
   },
   {
     title: "Global healthcare applications",
     category: "Cerner · React, Ruby on Rails",
     tools:
       "Appointment workflows, web components, product/UX partnership, reliability and defect reduction",
-    image: "/images/work-slide.svg",
-    link: "https://www.oracle.com/health/",
+    image:
+      "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&q=80&auto=format&fit=crop",
+    link: undefined,
   },
   {
     title: "PHYSDOC & revenue cycle",
     category: "Vista / Cerner client · Rails, React, Spring",
     tools:
       "Rails APIs, React-Redux, WebSockets with Spring Boot, auth/RBAC, unit-tested responsive UI",
-    image: "/images/work-slide.svg",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop",
     link: undefined,
   },
   {
@@ -34,7 +37,8 @@ const projects = [
     category: "Vista / Deloitte · Spring, Hibernate, Oracle",
     tools:
       "Enterprise MVC, SOAP/REST to carriers, PL/SQL performance, state HIE programs",
-    image: "/images/work-slide.svg",
+    image:
+      "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&q=80&auto=format&fit=crop",
     link: undefined,
   },
 ];

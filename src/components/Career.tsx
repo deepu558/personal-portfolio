@@ -23,11 +23,10 @@ const Career = () => {
             </div>
             <p>
               Architected a modular healthcare scheduling platform with Oracle JET
-              (OJET), TypeScript, and React. Designed semantic objects and
-              metadata for vector database storage with AI-powered semantic
-              search. OpenAPI-based integrations for real-time appointment
-              actions. Modernized Revenue Cycle apps with React and Oracle APEX,
-              improving performance and WCAG compliance.
+              (OJET), TypeScript, and React—reusable components, clear information
+              architecture, and fast appointment flows. OpenAPI-based integrations
+              for real-time appointment actions. Modernized Revenue Cycle apps with
+              React and Oracle APEX, improving performance and WCAG compliance.
             </p>
           </div>
           <div className="career-info-box">

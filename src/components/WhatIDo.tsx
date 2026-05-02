@@ -125,20 +125,21 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>AI &amp; FULL-STACK DELIVERY</h3>
-              <h4>Semantic search, APIs &amp; resilient systems</h4>
+              <h3>PRODUCT UI &amp; CRAFT</h3>
+              <h4>Layouts, systems &amp; polished healthcare experiences</h4>
               <p>
-                I implement semantic object models and vector-backed search,
-                Rails and Spring services, real-time channels, and thorough
-                testing—from JUnit and RSpec to Playwright and Selenium.
+                I turn complex clinical and revenue workflows into clear
+                interfaces—component libraries, responsive layouts, motion and
+                feedback that feel intentional, and UI patterns tested across
+                browsers with JUnit, RSpec, Playwright, and Selenium.
               </p>
               <h5>Skillset &amp; tools</h5>
               <div className="what-content-flex">
+                <div className="what-tags">Design systems</div>
                 <div className="what-tags">Java &amp; Spring</div>
                 <div className="what-tags">Ruby on Rails</div>
-                <div className="what-tags">Vector DBs</div>
                 <div className="what-tags">REST &amp; SOAP</div>
-                <div className="what-tags">Kubernetes &amp; Docker</div>
+                <div className="what-tags">Responsive UI</div>
                 <div className="what-tags">CI/CD</div>
               </div>
               <div className="what-arrow"></div>

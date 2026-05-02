@@ -1,8 +1,6 @@
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import "./styles/SocialIcons.css";
-import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
-import HoverLinks from "./HoverLinks";
 
 const SocialIcons = () => {
   useEffect(() => {
@@ -10,7 +8,8 @@ const SocialIcons = () => {
 
     social.querySelectorAll("span").forEach((item) => {
       const elem = item as HTMLElement;
-      const link = elem.querySelector("a") as HTMLElement;
+      const link = elem.querySelector(".social-link-inner") as HTMLElement;
+      if (!link) return;
 
       const rect = elem.getBoundingClientRect();
       let mouseX = rect.width / 2;
@@ -46,7 +45,7 @@ const SocialIcons = () => {
       updatePosition();
 
       return () => {
-        elem.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mousemove", onMouseMove);
       };
     });
   }, []);
@@ -55,35 +54,16 @@ const SocialIcons = () => {
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
         <span>
-          <a
-            href="https://github.com/manideepgrandhe"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <span className="social-link-inner" aria-hidden="true">
             <FaGithub />
-          </a>
+          </span>
         </span>
         <span>
-          <a
-            href="https://www.linkedin.com/in/manideep-grandhe/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <span className="social-link-inner" aria-hidden="true">
             <FaLinkedinIn />
-          </a>
+          </span>
         </span>
       </div>
-      <a
-        className="resume-button"
-        href="/Manideep_Grandhe_Resume.pdf"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <HoverLinks text="RESUME" />
-        <span>
-          <TbNotes />
-        </span>
-      </a>
     </div>
   );
 };

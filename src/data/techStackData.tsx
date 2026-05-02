@@ -22,7 +22,7 @@ import {
 export type TechItem = { name: string; Icon: IconType };
 export type TechGroup = { title: string; items: TechItem[] };
 
-/** Grouped from resume “Technical Skills” — adjust icons/names anytime in this file. */
+/** Grouped from your technical skills list — adjust icons/names anytime in this file. */
 export const techStackGroups: TechGroup[] = [
   {
     title: "Languages",

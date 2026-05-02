@@ -21,9 +21,8 @@
   transition: 0.3s;
   color: var(--backgroundColor);
 }
-.social-icons a:hover {
+.social-icons .social-link-inner:hover {
   color: var(--backgroundColor);
-  /* transform: scale(1.2); */
 }
 .social-icons span {
   width: 50px;
@@ -31,7 +30,7 @@
   position: relative;
   display: flex;
 }
-.social-icons a {
+.social-icons .social-link-inner {
   --siLeft: 50%;
   --siTop: 50%;
   position: absolute;
@@ -42,35 +41,7 @@
   font-size: 23px;
   will-change: left, top;
   transition: transform 0.3s ease-out;
-}
-.resume-button {
-  position: absolute;
-  z-index: 99;
-  display: flex;
-  gap: 5px;
-  bottom: 40px;
-  right: 0;
-  width: auto;
-  text-wrap: nowrap;
-  letter-spacing: 4px;
-  font-size: 15px;
-  line-height: 15px;
-  font-weight: 600;
-  color: #5e5e5e;
-  cursor: pointer;
-  transition: 0.5s;
-  transform-origin: left bottom;
-  transform: translateX(100%) rotateZ(-90deg);
-}
-.resume-button:hover {
-  color: #fff;
-}
-div.resume-button span {
-  color: #fff;
-  font-size: 17px;
-  margin-top: -1px;
-  display: flex;
-  align-items: center;
+  cursor: default;
 }
 .check-line {
   position: fixed;
@@ -86,18 +57,7 @@ div.resume-button span {
     display: flex;
     gap: 20px;
   }
-  .social-icons a {
+  .social-icons .social-link-inner {
     font-size: 28px;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .resume-button {
-    transform: none;
-    font-size: 20px;
-    line-height: 20px;
-  }
-  div.resume-button span {
-    font-size: 23px;
-    margin-top: -1.5px;
   }
 }

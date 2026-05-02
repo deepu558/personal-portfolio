@@ -42,18 +42,12 @@ const Navbar = () => {
   return (
     <>
       <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
+        <span className="navbar-title" data-cursor="disable">
           MG
-        </a>
-        <a
-          href="https://www.linkedin.com/in/manideep-grandhe/"
-          className="navbar-connect"
-          data-cursor="disable"
-          target="_blank"
-          rel="noreferrer"
-        >
+        </span>
+        <span className="navbar-connect" data-cursor="disable">
           linkedin.com/in/manideep-grandhe
-        </a>
+        </span>
         <ul>
           <li>
             <a data-href="#about" href="#about">

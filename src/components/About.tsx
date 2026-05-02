@@ -10,7 +10,7 @@ const About = () => {
           I lead with <strong>UI clarity and systems thinking</strong>—then ship
           full-stack healthcare products that scale. Eleven-plus years in
           Healthcare IT: React, TypeScript, Oracle JET, Java, and Ruby on Rails;
-          semantic search and modernized revenue-cycle experiences. I care
+          scheduling UIs and modernized revenue-cycle experiences. I care
           about <strong>WCAG</strong>, consistent design patterns, and agile
           delivery across the SDLC.
         </p>
