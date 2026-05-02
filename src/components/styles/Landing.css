@@ -283,7 +283,8 @@ h2.landing-info-h2 {
 /* Clear fixed header: on narrow screens nav links stack and the bar is tall */
 @media screen and (max-width: 1024px) {
   .landing-section {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 5.5rem);
+    /* Shorter fixed nav (row + menu) vs old stacked links */
+    padding-top: calc(env(safe-area-inset-top, 0px) + 4.75rem);
   }
 
   .landing-intro {
@@ -293,7 +294,7 @@ h2.landing-info-h2 {
 
 @media screen and (max-width: 499px) {
   .landing-section {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 7.25rem);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 5.25rem);
   }
 }
 
