@@ -1,4 +1,4 @@
-/* Full-width strip — no outer “card” box */
+/* ─── Mobile / tablet (<900px): full-width strip, no card, no MG ─── */
 .header {
   display: flex;
   justify-content: space-between;
@@ -22,6 +22,10 @@
   box-shadow: none;
 }
 
+.navbar-title {
+  display: none;
+}
+
 .navbar-linkedin {
   display: inline-flex;
   align-items: center;
@@ -37,6 +41,7 @@
   letter-spacing: 0.04em;
   text-decoration: none;
   white-space: nowrap;
+  position: static;
 }
 
 .navbar-linkedin:hover {
@@ -48,10 +53,6 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-}
-
-.navbar-grid-spacer {
-  display: none;
 }
 
 .navbar-nav {
@@ -110,43 +111,78 @@
   }
 }
 
+/* ─── Desktop (≥900px): original frosted card — MG | centered LinkedIn pill | nav ─── */
 @media only screen and (min-width: 900px) {
   .header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    column-gap: 16px;
-    padding: calc(14px + env(safe-area-inset-top, 0px)) max(22px, 5vw, env(safe-area-inset-right, 0px)) 14px max(22px, 5vw, env(safe-area-inset-left, 0px));
+    max-width: var(--cMaxWidth);
+    width: var(--cWidth);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: 12px;
+    margin-bottom: -100px;
+    padding: 16px 22px;
+    border-radius: var(--radiusUi, 16px);
+    border: 1px solid var(--surfaceBorder, rgba(94, 234, 212, 0.12));
+    background: rgba(5, 8, 16, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    position: fixed;
+  }
+
+  .navbar-title {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radiusPill, 999px);
+    border: 1px solid var(--surfaceBorder, rgba(94, 234, 212, 0.2));
+    background: rgba(15, 23, 42, 0.5);
+    flex-shrink: 0;
   }
 
   .navbar-linkedin {
-    grid-column: 2;
-    justify-self: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    padding: 8px 14px;
   }
 
   .navbar-nav {
-    grid-column: 1;
-    justify-self: start;
-    flex: unset;
+    flex: 0 0 auto;
     min-width: 0;
   }
 
   .navbar-nav-list {
-    justify-content: flex-start;
     font-size: 14px;
-    gap: 36px;
+    gap: 40px;
+    color: #eae5ec;
   }
 
-  .navbar-grid-spacer {
-    display: block;
-    grid-column: 3;
+  .navbar-nav-list li {
+    color: #eae5ec;
   }
 }
 
 @media only screen and (min-width: 1200px) {
+  .header {
+    padding: 18px 28px;
+  }
+
+  .navbar-title {
+    font-size: 18px;
+  }
+
   .navbar-nav-list {
     font-size: 16px;
-    gap: 64px;
+    gap: 80px;
   }
 
   .navbar-linkedin-text {
@@ -154,7 +190,6 @@
   }
 }
 
-/* Very narrow: shorten label slightly — still readable */
 @media only screen and (max-width: 359px) {
   .navbar-linkedin-text {
     font-size: 12px;

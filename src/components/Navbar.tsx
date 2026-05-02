@@ -46,6 +46,10 @@ const Navbar = () => {
   return (
     <>
       <header className="header">
+        <span className="navbar-title" data-cursor="disable">
+          MG
+        </span>
+
         <a
           href={LINKEDIN_URL}
           className="navbar-linkedin"
@@ -76,8 +80,6 @@ const Navbar = () => {
             </li>
           </ul>
         </nav>
-
-        <div className="navbar-grid-spacer" aria-hidden="true" />
       </header>
 
       <div className="landing-circle1"></div>
